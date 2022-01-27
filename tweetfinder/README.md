@@ -8,6 +8,9 @@ I initially deployed this project on an Ubuntu server through Linode, but quickl
 
 <h5>Screen recording</h5>
 <a href="https://youtu.be/Av7SjXdFORs" target="_blank">Here ya go</a>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Av7SjXdFORs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 <h5>Code Walkthrough</h5>
 And <a href="https://kevinluxdev.blogspot.com/2022/01/how-i-made-this-tweetfinderapp.html" target="_blank">here's</a> the link to the blog post
 

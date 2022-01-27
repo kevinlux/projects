@@ -1,6 +1,6 @@
 <h1>Tweetfinder</h1>
 
-<img src="./nfnH7C01-min.svg">
+<img src="./tweetfinder.png">
 
 This Flask web app lets the user upload a screenshot of a tweet. The app will then use EasyOCR to gather all the text from the screenshot and use the Twitter API to search for the tweet. The Twitter API returns a collection of tweets. Every tweet is then assigned a score that factors in exact substring matches as well as approximate matches (using Levenshtein distance). Finally, the user is redirected to the URL of the best matching tweet.
 

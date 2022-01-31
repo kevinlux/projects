@@ -43,8 +43,10 @@ func GetResource(resource string) gin.HandlerFunc {
 			c.JSON(http.StatusOK, responses.ResumeResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": resume}})
 		case "fullname":
 			c.JSON(http.StatusOK, responses.ResumeResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": resume.FullName}})
-		case "email":
-			c.JSON(http.StatusOK, responses.ResumeResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": resume.Email}})
+		case "linkedin":
+			c.JSON(http.StatusOK, responses.ResumeResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": resume.Linkedin}})
+		case "github":
+			c.JSON(http.StatusOK, responses.ResumeResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": resume.Github}})
 		case "website":
 			c.JSON(http.StatusOK, responses.ResumeResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": resume.Website}})
 		case "summary":
@@ -82,12 +84,13 @@ func UpdateResume() gin.HandlerFunc {
 
 		update := bson.M{
 			"fullname":     resume.FullName,
-			"email":        resume.Email,
+			"linkedin":     resume.Linkedin,
+			"github":       resume.Github,
 			"website":      resume.Website,
 			"summary":      resume.Summary,
 			"technologies": resume.Technologies,
 			"education":    resume.Education,
-			"work history": resume.WorkHistory,
+			"workhistory":  resume.WorkHistory,
 			"languages":    resume.Languages,
 		}
 

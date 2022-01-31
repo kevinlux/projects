@@ -13,7 +13,8 @@
 </head>
 <body>
 <h1>{{.FullName}}</h1>
-<p>{{.Email}}</p>
+<p><a href="{{ .Linkedin }}" target="_blank">Linkedin</a></p>
+<p><a href="{{ .Github }}" target="_blank">Github</a></p>
 <p><a href="https://www.kevinlux.dev" target="_blank">{{ .Website }}</a></p>
 <h4>Summary</h4>
 <p>{{.Summary}}</p>
@@ -34,7 +35,7 @@
             <li>{{$element.Grade}}</li>
             {{ if $element.Noteworthy }}
             <li>
-                {{ range $in, $el := .Noteworthy }}
+                {{ range $in, $el := $element.Noteworthy }}
                 <span>{{ $el }}</span>
                 {{ end }}
             </li>
@@ -46,18 +47,21 @@
 <h4>Work History</h4>
 <ul>
     {{ range $index, $element := .WorkHistory }}
-    <li><strong>{{ $element.Employer }}</strong>, {{ $element.Role }}</li>
-    <li>{{ $element.City }}, {{ $element.Country }}</li>
-    <li>{{ $element.Start.Month }} {{ $element.Start.Year }} - {{ $element.End.Month }} {{ $element.End.Year }}</li>
     <li>
-        <ul>
-            {{ range $i, $e := $element.Responsibilities }}
-            <li>
-                {{ $e }}
-            </li>
-            {{ end }}
-        </ul>
-    </li>
+       <ul>
+           <li><strong>{{ $element.Employer }}</strong>, {{ $element.Role }}</li>
+           <li>{{ $element.City }}, {{ $element.Country }}</li>
+           <li>{{ $element.Start.Month }} {{ $element.Start.Year }} - {{ $element.End.Month }} {{ $element.End.Year }}</li>
+           <li>
+               <ul>
+                   {{ range $i, $e := $element.Responsibilities }}
+                   <li>
+                       {{ $e }}
+                   </li>
+                   {{ end }}
+               </ul>
+           </li>
+       </ul>
     {{ end }}
 </ul>
 <h4>Languages</h4>

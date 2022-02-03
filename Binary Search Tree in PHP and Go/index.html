@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="php" class="pane">
+            <input type="image" src="gopher.png" class="img-button" id="gopher" onclick="switchContext(this.id)">
+            <h1 class="instruction" id="php-instr">PHP</h1>
+            <p class="banner">click gopher to view Go BST</p>
+            <h2 id="create-the-tree-and-node-classes">Create the Tree and Node classes</h2>
+            <pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tree</span> </span>{
+    <span class="hljs-keyword">public</span> $root = <span class="hljs-keyword">null</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">$this</span>-&gt;root = <span class="hljs-keyword">null</span>;
+    }
+
+<span class="hljs-comment">// $value will be an int, $left and $right will be Nodes</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>{
+    <span class="hljs-keyword">public</span> $value;
+    <span class="hljs-keyword">public</span> $left;
+    <span class="hljs-keyword">public</span> $right;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(int $value = null)</span> </span>{
+        <span class="hljs-keyword">$this</span>-&gt;value = $value;
+        <span class="hljs-keyword">$this</span>-&gt;left = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">$this</span>-&gt;right = <span class="hljs-keyword">null</span>;
+    }
+</code></pre>
+            <h2 id="create-the-functions-to-insert-a-node-into-tree-">Create the functions to insert a node into tree:
+            </h2>
+            <pre><code class="lang-php">// <span class="hljs-keyword">in</span> the <span class="hljs-keyword">Node</span> <span class="hljs-title">class</span> definition
+
+public function insertRecursive(int $value) { // return <span class="hljs-literal">true</span> if insert successful, <span class="hljs-literal">false</span> if not successful
+// if value is already <span class="hljs-keyword">in</span> tree, do not insert
+    if ($value == $this-&gt;value) {
+        return <span class="hljs-literal">false</span>;
+// if value is smaller than value of current <span class="hljs-keyword">node</span>.<span class="hljs-title">..
+    } else</span> if ($value <span class="hljs-tag">&lt; $this-&gt;</span>value) {
+// ...<span class="hljs-keyword">and</span> current <span class="hljs-keyword">node</span> <span class="hljs-title">has</span> no left child, then create new <span class="hljs-keyword">node</span> <span class="hljs-title">as</span> left child of current <span class="hljs-keyword">node</span> 
+        <span class="hljs-title">if</span> ($this-&gt;left == null) {
+            $this-&gt;left = new <span class="hljs-keyword">Node</span><span class="hljs-title">($value</span>);
+// ...<span class="hljs-keyword">and</span> current <span class="hljs-keyword">node</span> <span class="hljs-title">DOES</span> have a left child, call insertRecursive() on left child of current <span class="hljs-keyword">node</span>
+        <span class="hljs-title">} else</span> {
+            $this-&gt;left-&gt;insertRecursive($value);
+        }
+// if value is greater than value of current <span class="hljs-keyword">node</span>.<span class="hljs-title">..
+    } else</span> {
+// ...<span class="hljs-keyword">and</span> current <span class="hljs-keyword">node</span> <span class="hljs-title">has</span> no right child, then create new <span class="hljs-keyword">node</span> <span class="hljs-title">as</span> right child of current <span class="hljs-keyword">node</span> 
+        <span class="hljs-title">if</span> ($this-&gt;right == null) {
+            $this-&gt;right = new <span class="hljs-keyword">Node</span><span class="hljs-title">($value</span>);
+// ...<span class="hljs-keyword">and</span> current <span class="hljs-keyword">node</span> <span class="hljs-title">DOES</span> have a right child, call insertRecursive() on right child of current <span class="hljs-keyword">node</span>
+        <span class="hljs-title">} else</span> {
+            $this-&gt;right-&gt;insertRecursive($value);
+        }
+    }
+    return <span class="hljs-literal">true</span>;
+}
+
+// <span class="hljs-keyword">in</span> the Tree class definition (create so that insert can be called from a Tree instance rather than <span class="hljs-keyword">Node</span> <span class="hljs-title">instance</span>)
+public function insert($value) {
+    $<span class="hljs-keyword">node</span> <span class="hljs-title">= $this-</span>&gt;root;
+// if root <span class="hljs-keyword">node</span> <span class="hljs-title">is</span> null that means the tree is empty, so value becomes root <span class="hljs-keyword">node</span> 
+    <span class="hljs-title">if</span> ($<span class="hljs-keyword">node</span> <span class="hljs-title">=== null</span>) {
+        $this-&gt;root = new <span class="hljs-keyword">Node</span><span class="hljs-title">($value</span>);
+    }
+// if the tree is not empty, call recursive function    
+    else {
+        $this-&gt;root-&gt;insertRecursive($value);
+    }
+
+}
+</code></pre>
+            <h2 id="check-whether-a-tree-contains-a-certain-value-">Check whether a tree contains a certain value:</h2>
+            <pre><code class="lang-php"><span class="hljs-comment">// in the Node class definition</span>
+
+<span class="hljs-comment">// <span class="hljs-doctag">NOTE:</span> null safe operator ?-&gt; (available since PHP8) used to keep the code as similar as possible to the Go code</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containsRecursive</span><span class="hljs-params">($value)</span> </span>{ <span class="hljs-comment">// return true if contains, false if not</span>
+<span class="hljs-comment">// if node value is null, that means the tree does not contain the value</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;value == <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+<span class="hljs-comment">// if value is smaller than current node value, recursively check left child of current node</span>
+    <span class="hljs-keyword">if</span> ($value &lt; <span class="hljs-keyword">$this</span>-&gt;value) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;left?-&gt;containsRecursive($value);
+    }
+<span class="hljs-comment">// if value is greater than current node value, recursively check right child of current node</span>
+    <span class="hljs-keyword">if</span> ($value &gt; <span class="hljs-keyword">$this</span>-&gt;value) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;right?-&gt;containsRecursive($value);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+
+}
+
+<span class="hljs-comment">// in the Tree class definition (create so that insert can be called from a Tree instance rather than Node instance)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">contains</span><span class="hljs-params">($value)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;root-&gt;containsRecursive($value);
+}
+</code></pre>
+            <h2 id="print-the-in-order-pre-order-and-post-order-tree-traversal-results-to-the-console-">Print the
+                in-order, pre-order, and post-order tree traversal results to the console:</h2>
+            <pre><code class="lang-php"><span class="hljs-comment">// in the Node class definition</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">traverseRecursive</span><span class="hljs-params">($order)</span> </span>{
+<span class="hljs-comment">// if current node is null either tree is empty or traversal is complete</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span> == <span class="hljs-keyword">null</span> ) {
+        <span class="hljs-keyword">return</span>;
+<span class="hljs-comment">// if current node is not null then...</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">switch</span> ($order) {
+<span class="hljs-comment">// do pre-order traversal, i.e. print before the recursive calls</span>
+            <span class="hljs-keyword">case</span> <span class="hljs-string">"pre"</span>:
+                <span class="hljs-keyword">echo</span> <span class="hljs-keyword">$this</span>-&gt;value, PHP_EOL;
+                printPreorder(<span class="hljs-keyword">$this</span>-&gt;left);
+                printPreorder(<span class="hljs-keyword">$this</span>-&gt;right);
+               <span class="hljs-keyword">break</span>;
+<span class="hljs-comment">// do in-order traversal, i.e. print after recursive call to the left but before recursive call to the right</span>
+<span class="hljs-comment">// this will print the node values in ascending order</span>
+            <span class="hljs-keyword">case</span> <span class="hljs-string">"in"</span>:
+                printInorder(<span class="hljs-keyword">$this</span>-&gt;left);
+                <span class="hljs-keyword">echo</span> <span class="hljs-keyword">$this</span>-&gt;value, PHP_EOL;
+                printInorder(<span class="hljs-keyword">$this</span>-&gt;right);
+                <span class="hljs-keyword">break</span>;
+<span class="hljs-comment">// do post-order traversal, i.e. print after recursive calls to left and right in that order   </span>
+            <span class="hljs-keyword">case</span> <span class="hljs-string">"post"</span>:
+                printPostorder(<span class="hljs-keyword">$this</span>-&gt;left);
+                printPostorder(<span class="hljs-keyword">$this</span>-&gt;right);
+                <span class="hljs-keyword">echo</span> <span class="hljs-keyword">$this</span>-&gt;value, PHP_EOL;
+        }
+    }
+}
+<span class="hljs-comment">// in the Tree class definition (create so that insert can be called from a Tree instance rather than Node instance)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">traverse</span><span class="hljs-params">($order)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;root-&gt;traverseRecursive($order);
+}
+</code></pre>
+            <h2 id="and-that-s-it-">And that&#39;s it!</h2>
+
+        </div>
+        <div id="go" class="pane">
+            <input type="image" id="elephant" src="elephant.png" class="img-button" onclick="switchContext(this.id)">
+            <h1 class="instruction" id="go-instr">Go</h1>
+            <p class="banner">click elephant to view PHP BST</p>
+            <h2 id="create-the-tree-and-node-structs">Create the tree and node structs</h2>
+            <pre><code class="lang-go">// NOTE: all custom types <span class="hljs-keyword">and</span> functions <span class="hljs-literal">start</span> with a lower case initial since there is no need to export any of them
+ 
+
+<span class="hljs-keyword">type</span> <span class="hljs-keyword">node</span> <span class="hljs-title">struct</span> {
+    value int
+    left  *<span class="hljs-keyword">node</span>
+    <span class="hljs-title">right</span> *<span class="hljs-keyword">node</span>
+<span class="hljs-title">}
+
+type</span> tree struct {
+    root *<span class="hljs-keyword">node</span>
+<span class="hljs-title">}</span>
+</code></pre>
+            <h2 id="create-the-functions-to-insert-a-node-into-tree-">Create the functions to insert a node into tree:
+            </h2>
+            <pre><code class="lang-go">func (n *node) insertRecursive(value <span class="hljs-keyword">int</span>) bool { // <span class="hljs-keyword">return</span> true <span class="hljs-keyword">if</span> <span class="hljs-keyword">insert</span> successful, false <span class="hljs-keyword">if</span> not
+// <span class="hljs-keyword">if</span> value <span class="hljs-keyword">is</span> already in tree, <span class="hljs-keyword">do</span> not <span class="hljs-keyword">insert</span>
+    <span class="hljs-keyword">if</span> value == n.value {
+        <span class="hljs-keyword">return</span> false
+// <span class="hljs-keyword">if</span> value <span class="hljs-keyword">is</span> smaller than value of current node...
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> value &lt; n.value {
+// ...<span class="hljs-built_in">and</span> current node <span class="hljs-built_in">has</span> <span class="hljs-keyword">no</span> <span class="hljs-keyword">left</span> child, then create <span class="hljs-keyword">new</span> node <span class="hljs-keyword">as</span> <span class="hljs-keyword">left</span> child of current node 
+        <span class="hljs-keyword">if</span> n.<span class="hljs-keyword">left</span> == nil {
+            n.<span class="hljs-keyword">left</span> = &amp;node{value: value}
+// ...<span class="hljs-built_in">and</span> current node DOES have <span class="hljs-keyword">a</span> <span class="hljs-keyword">left</span> child, <span class="hljs-keyword">call</span> insertRecursive() <span class="hljs-keyword">on</span> <span class="hljs-keyword">left</span> child of current node
+        } <span class="hljs-keyword">else</span> {
+            n.<span class="hljs-keyword">left</span>.insertRecursive(value)
+        }
+// <span class="hljs-keyword">if</span> value <span class="hljs-keyword">is</span> greater than value of current node...
+    } <span class="hljs-keyword">else</span> {
+// ...<span class="hljs-built_in">and</span> current node <span class="hljs-built_in">has</span> <span class="hljs-keyword">no</span> <span class="hljs-keyword">right</span> child, then create <span class="hljs-keyword">new</span> node <span class="hljs-keyword">as</span> <span class="hljs-keyword">right</span> child of current node 
+        <span class="hljs-keyword">if</span> n.<span class="hljs-keyword">right</span> == nil {
+            n.<span class="hljs-keyword">right</span> = &amp;node{value: value}
+// ...<span class="hljs-built_in">and</span> current node DOES have <span class="hljs-keyword">a</span> <span class="hljs-keyword">right</span> child, <span class="hljs-keyword">call</span> insertRecursive() <span class="hljs-keyword">on</span> <span class="hljs-keyword">right</span> child of current node
+        } <span class="hljs-keyword">else</span> {
+            n.<span class="hljs-keyword">right</span>.insertRecursive(value)
+        }
+    }
+        <span class="hljs-keyword">return</span> true
+}
+
+// create <span class="hljs-keyword">insert</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">with</span> <span class="hljs-title">pointer</span> <span class="hljs-title">to</span> <span class="hljs-title">tree</span> <span class="hljs-title">receiver</span></span>
+func (t *tree) <span class="hljs-keyword">insert</span>(value <span class="hljs-keyword">int</span>) bool {
+    <span class="hljs-keyword">if</span> t.root == nil {
+        t.root = &amp;node{value: value}
+        <span class="hljs-keyword">return</span> true
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> t.root.insertRecursive(value)
+    }
+}
+</code></pre>
+            <h2 id="check-whether-a-tree-contains-a-certain-value-">Check whether a tree contains a certain value:</h2>
+            <pre><code class="lang-go">func (n *node) containsRecursive(<span class="hljs-keyword">value</span> <span class="hljs-built_in">int</span>) bool { // returns true <span class="hljs-keyword">if</span> <span class="hljs-keyword">contains</span>, false <span class="hljs-keyword">if</span> not
+// <span class="hljs-keyword">if</span> node <span class="hljs-keyword">value</span> is nil, that means the tree does not contain the <span class="hljs-keyword">value</span>    
+    <span class="hljs-keyword">if</span> n == nil {
+        <span class="hljs-keyword">return</span> false
+    }
+// <span class="hljs-keyword">if</span> <span class="hljs-keyword">value</span> is smaller than current node <span class="hljs-keyword">value</span>, recursively check left child of current node    
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">value</span> &lt; n.<span class="hljs-keyword">value</span> {
+        <span class="hljs-keyword">return</span> n.left.containsRecursive(<span class="hljs-keyword">value</span>)
+    }
+// <span class="hljs-keyword">if</span> <span class="hljs-keyword">value</span> is greater than current node <span class="hljs-keyword">value</span>, recursively check right child of current node    
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">value</span> &gt; n.<span class="hljs-keyword">value</span> {
+        <span class="hljs-keyword">return</span> n.right.containsRecursive(<span class="hljs-keyword">value</span>)
+    }
+    <span class="hljs-keyword">return</span> true
+}
+
+// create insert <span class="hljs-function"><span class="hljs-keyword">function</span></span> with <span class="hljs-keyword">pointer</span> to tree receiver
+func (t *tree) <span class="hljs-keyword">contains</span>(<span class="hljs-keyword">value</span> <span class="hljs-built_in">int</span>) bool {
+    <span class="hljs-keyword">return</span> t.root.containsRecursive(<span class="hljs-keyword">value</span>)
+}
+</code></pre>
+            <h2 id="print-the-in-order-pre-order-and-post-order-tree-traversal-results-to-the-console-">Print the
+                in-order, pre-order, and post-order tree traversal results to the console:</h2>
+            <pre><code class="lang-go">
+func (n *node) traverseRecursive(<span class="hljs-keyword">tr</span> <span class="hljs-built_in">string</span>) {
+// <span class="hljs-keyword">if</span> current node <span class="hljs-keyword">is</span> nil either tree <span class="hljs-keyword">is</span> <span class="hljs-built_in">empty</span> <span class="hljs-built_in">or</span> traversal <span class="hljs-keyword">is</span> <span class="hljs-built_in">complete</span>    
+    <span class="hljs-keyword">if</span> n == nil {
+        <span class="hljs-keyword">return</span>
+// <span class="hljs-keyword">if</span> current node <span class="hljs-keyword">is</span> not nil then...        
+    } <span class="hljs-keyword">else</span> {
+        switch <span class="hljs-keyword">tr</span> {
+// <span class="hljs-keyword">do</span> <span class="hljs-keyword">pre</span>-order traversal, i.<span class="hljs-keyword">e</span>. <span class="hljs-keyword">print</span> before the recursive calls        
+        case <span class="hljs-string">"pre"</span>:
+            fmt.Println(n.value)
+            n.<span class="hljs-keyword">left</span>.traverseRecursive(<span class="hljs-keyword">tr</span>)
+            n.<span class="hljs-keyword">right</span>.traverseRecursive(<span class="hljs-keyword">tr</span>)
+// <span class="hljs-keyword">do</span> in-order traversal, i.<span class="hljs-keyword">e</span>. <span class="hljs-keyword">print</span> after recursive <span class="hljs-keyword">call</span> <span class="hljs-keyword">to</span> the <span class="hljs-keyword">left</span> but before recursive <span class="hljs-keyword">call</span> <span class="hljs-keyword">to</span> the <span class="hljs-keyword">right</span>            
+// this will <span class="hljs-keyword">print</span> the node <span class="hljs-built_in">values</span> in ascending order
+        case <span class="hljs-string">"in"</span>:
+            n.<span class="hljs-keyword">left</span>.traverseRecursive(<span class="hljs-keyword">tr</span>)
+            fmt.Println(n.value)
+            n.<span class="hljs-keyword">right</span>.traverseRecursive(<span class="hljs-keyword">tr</span>)
+// <span class="hljs-keyword">do</span> post-order traversal, i.<span class="hljs-keyword">e</span>. <span class="hljs-keyword">print</span> after recursive calls <span class="hljs-keyword">to</span> <span class="hljs-keyword">left</span> <span class="hljs-built_in">and</span> <span class="hljs-keyword">right</span> in that order
+        case <span class="hljs-string">"post"</span>:
+            n.<span class="hljs-keyword">left</span>.traverseRecursive(<span class="hljs-keyword">tr</span>)
+            n.<span class="hljs-keyword">right</span>.traverseRecursive(<span class="hljs-keyword">tr</span>)
+            fmt.Println(n.value)
+        }
+    }
+}
+
+// create <span class="hljs-keyword">insert</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">with</span> <span class="hljs-title">pointer</span> <span class="hljs-title">to</span> <span class="hljs-title">tree</span> <span class="hljs-title">receiver</span></span>
+func (t *tree) traverse(<span class="hljs-keyword">tr</span> <span class="hljs-built_in">string</span>) {
+    t.root.traverseRecursive(<span class="hljs-keyword">tr</span>)
+}
+</code></pre>
+            <h2 id="and-we-re-done-">And we&#39;re done!</h2>
+
+        </div>
+    </div>
+    <script>
+        function switchContext(id) {
+            if (id === "gopher") {
+                document.getElementById('go').style.display = "initial"
+                document.getElementById('php').style.display = "none"
+            } else if (id === "elephant") {
+                document.getElementById('php').style.display = "initial";
+                document.getElementById('go').style.display = "none";
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

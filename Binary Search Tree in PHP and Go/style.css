@@ -1,0 +1,118 @@
+body {
+    margin: 0 0 0 0;
+    font-family: monospace;
+    font-size: 1em;
+    max-height: 100%;
+}
+
+html {
+    max-height: 100%;
+    overflow: hidden;
+}
+
+
+h1 {
+    position: static;
+    display: block;
+    margin: 0;
+    top: 0 !important;
+    color: rgb(245, 245, 245);
+    z-index: 4;
+}
+
+pre>code {
+    overflow-x: scroll;
+}
+
+
+#go-instr {
+    left: 50% !important;
+    background-color: rgba(106, 215, 229, 1);
+}
+
+#php-instr {
+    left: 0 !important;
+    background-color: rgba(140, 155, 214, 1);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 50vw 50vw;
+}
+
+.pane {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    overflow-y: scroll;
+    border-radius: 12px;
+    padding-top: 1vh;
+    height: 99%;
+
+}
+
+.img-button {
+    display: none;
+}
+
+.banner {
+    display: none;
+}
+
+#php {
+    background-color: rgba(140, 155, 214, 0.6);
+}
+
+#go {
+    background-color: rgba(106, 215, 229, 0.4);
+}
+
+
+
+@media (max-width: 900px) {
+
+    .wrapper {
+        display: grid;
+        grid-template-columns: 100vw 100vw;
+        height: 50px;
+    }
+
+    .pane {
+        position: absolute;
+    }
+
+    #go {
+        display: none;
+    }
+
+    .img-button {
+        display: initial;
+        visibility: visible;
+        height: 50px;
+        position: sticky;
+        top: 85vh;
+        /* right: 10%; */
+        left: 2%;
+    }
+
+    /* #gopher {
+        left: ;
+    } */
+
+    .instruction {
+        display: initial;
+        position: fixed;
+        top: 3vh;
+        left: 2vw;
+    }
+
+
+    #go-instr {
+        left: 0 !important;
+    }
+
+    .banner {
+        background-color: beige;
+        display: inherit;
+    }
+
+}

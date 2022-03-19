@@ -7,7 +7,7 @@ This Flask web app lets the user upload a screenshot of a tweet. The app will th
 I initially deployed this project on an Ubuntu server through Linode, but quickly found out that their free tier instance was just way too underpowered to run EasyOCR without constantly crashing. In the end I decided to take it down. But before I did that I took a screenrecording of it in action, which you can see below.
 
 <h5>Screen recording</h5>
-<img src="screen recording.gif>
+<img src="screenrecording.gif>
 <h5>Code Walkthrough</h5>
 And <a href="https://kevinluxdev.blogspot.com/2022/01/how-i-made-this-tweetfinderapp.html" target="_blank">here's</a> the link to the blog post
 
